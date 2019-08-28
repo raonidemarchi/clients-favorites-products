@@ -5,8 +5,8 @@ const morgan = require('morgan')
 const helmet = require('helmet')
 const app = express()
 
-const loginRouter = require('./routes/login')
-const clientRouter = require('./routes/client')
+const loginRouter = require('./app/routes/login')
+const clientRouter = require('./app/routes/client')
 
 let server = {}
 
