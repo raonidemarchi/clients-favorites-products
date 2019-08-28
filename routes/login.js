@@ -7,8 +7,10 @@ router.post('/', (req, res) => {
   let id = ''
   let token = ''
 
+  // @TODO
   if (req.body.user === 'raoni' && req.body.pass === 'adm') {
     id = 1
+
     token = jwt.sign({ id }, 'secret-key', {
       expiresIn: 600 // expira em 10 min
     })

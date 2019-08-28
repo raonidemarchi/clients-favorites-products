@@ -1,7 +1,7 @@
 const http = require('http')
 const express = require('express')
 const cookieParser = require('cookie-parser')
-const logger = require('morgan')
+const morgan = require('morgan')
 const helmet = require('helmet')
 const app = express()
 
@@ -10,7 +10,7 @@ const clientRouter = require('./routes/client')
 
 let server = {}
 
-app.use(logger('dev'))
+app.use(morgan('dev'))
 app.use(helmet())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))

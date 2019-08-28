@@ -7,12 +7,12 @@ function verifyJWT(req, res, next) {
     return res.status(401).send({ auth: false, message: 'No token provided.' })
   }
   
-  jwt.verify(token, 'secret-key', function(err, decoded) {
+  jwt.verify(token, 'secret-key', (err, decoded) => {
     if (err) {
       return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' })
     }
-    
-    req.userId = decoded.id
+
+    req.user_id = decoded.id
     next()
   })
 }
