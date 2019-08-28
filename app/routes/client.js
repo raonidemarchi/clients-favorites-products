@@ -1,20 +1,19 @@
 const express = require('express')
 const router = express.Router()
-const { verifyJWT } = require('../helpers/helpers')
 const mongodb = require('mongodb').MongoClient
-const databaseUrl = process.env.DATABASE_URL || 'mongodb://192.168.99.100/'
+const { verifyJWT } = require('../helpers/helpers')
+const { DATABASE_NAME, DATABASE_URL } = require('../../config/db-config')
 
 /* GET lista de clientes */
 router.get('/', verifyJWT, (req, res) => {
-  
-  mongodb.connect(databaseUrl, { useNewUrlParser: true }, (err, db) => {
+  mongodb.connect(DATABASE_URL, { useNewUrlParser: true }, (err, db) => {
     let dbo = {}
 
     if (err) {
       throw err
     }
 
-    dbo = db.db('iv2-makeiteasy')
+    dbo = db.db(DATABASE_NAME)
     
     dbo.collection('clients').find({}).toArray((err, result) => {
       if (err) {

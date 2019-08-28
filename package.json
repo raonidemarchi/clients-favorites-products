@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node app/app.js",
     "dev": "nodemon app/app.js",
-    "migrate": "migrate-mongo -f ./db/migrate-mongo-config.js up"
+    "migration-up": "migrate-mongo up -f ./config/migrate-mongo-config.js",
+    "migration-down": "migrate-mongo down -f ./config/migrate-mongo-config.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.4",

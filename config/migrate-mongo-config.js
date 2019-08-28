@@ -1,7 +1,9 @@
+const { DATABASE_NAME, DATABASE_URL } = require('./db-config')
+
 const config = {
   mongodb: {
-    url: 'mongodb://192.168.99.100:27017',
-    databaseName: 'clients_favorites_products',
+    url: DATABASE_URL,
+    databaseName: DATABASE_NAME,
 
     options: {
       useNewUrlParser: true,
@@ -9,7 +11,7 @@ const config = {
     }
   },
 
-  migrationsDir: './db/migrations',
+  migrationsDir: './migrations',
   changelogCollectionName: 'changelog'
 };
 

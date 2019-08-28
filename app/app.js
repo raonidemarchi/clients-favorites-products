@@ -5,8 +5,8 @@ const morgan = require('morgan')
 const helmet = require('helmet')
 const app = express()
 
-const loginRouter = require('./app/routes/login')
-const clientRouter = require('./app/routes/client')
+const loginRouter = require('./routes/login')
+const clientRouter = require('./routes/client')
 
 let server = {}
 
@@ -20,4 +20,6 @@ app.use('/api/login', loginRouter)
 app.use('/api/client', clientRouter)
 
 server = http.createServer(app)
-server.listen(process.env.PORT || 3000)
+server.listen(process.env.PORT || 3000, () => {
+  console.log('Server listening on port ' + 3000)
+})
