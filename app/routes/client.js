@@ -57,29 +57,46 @@ router.delete('/:id', verifyJWT, (req, res) => {
   })
 })
 
-/* GET favorite product */
+/* GET list client's favorites products */
+router.get('/favorites_products/:client_id', verifyJWT, (req, res) => {
+  clientModel.findOne({ _id: req.params.client_id }, 'favorites_products', (err, data) => {
+    if (err) {
+      return res.status(500).json({ message: 'Não foi possível trazer a lista de produtos favoritos' })
+    }
 
+    return res.status(200).json(data)
+  })
+})
 
 /* POST add product to favorites */
-router.post('/favorite_product/:product_id/:client_id', verifyJWT, async (req, res) => {
+router.post('/favorite_product/:client_id/:product_id', verifyJWT, async (req, res) => {
   const client_id = req.params.client_id
   const product_id = req.params.product_id
   const favoriteProduct = await validateProductById(product_id)
+  let favoriteProductUtilData = {}
 
   if (!favoriteProduct) {
     return res.status(404).json({ message: 'Produto não encontrado.' })
   }
 
+  favoriteProductUtilData = {
+    id: favoriteProduct.id,
+    title: favoriteProduct.title,
+    image: favoriteProduct.image,
+    price: favoriteProduct.price,
+    reviewScore: favoriteProduct.reviewScore
+  }
+
   clientModel.updateOne(
     {
       _id: client_id,
-      favorites_products: {
+      'favorites_products.id': {
         $nin: [product_id]
       }
     },
-    { 
+    {
       $push: {
-        favorites_products: product_id
+        favorites_products: favoriteProductUtilData
       }
     }, (err, data) => {
       if (err) {
