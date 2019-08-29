@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const axios = require('axios')
 
 function verifyJWT(req, res, next) {
   next()
@@ -18,6 +19,21 @@ function verifyJWT(req, res, next) {
   // })
 }
 
+function validateProductById(id) {
+  return new Promise(async resolve => {
+    let result = {}
+    
+    try {
+      result = await axios.get(`http://challenge-api.luizalabs.com/api/product/${id}`)
+    } catch(error) {
+      return resolve(false)
+    }
+
+    return resolve(result.data);
+  })
+}
+
 module.exports = {
-  verifyJWT
+  verifyJWT,
+  validateProductById
 }

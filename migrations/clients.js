@@ -1,19 +1,26 @@
-ObjectID = require('mongodb').ObjectID
-ObjectId = new ObjectID()
+const clientModel = 
 
 module.exports = {
-  async up(db) {
-    await db.collection('clients').insertMany([
+  up(db) {
+    return db.collection('clients').insertMany([
       {
-        _id: new ObjectID('5d66ece2bbcdf150c8307d96'),
-        nome: 'Raoni Costa Demarchi',
+        name: 'Raoni Costa Demarchi',
         email: 'raonidemarchi@gmail.com',
-        endereco: 'Rua João Iotti, 94'
+        address: 'Rua João Iotti, 94',
+        favorites_products: [
+          '12398weuf', '321dsasfg', 'wq12e2213'
+        ]
+      },
+      {
+        name: 'Jorge Silva',
+        email: 'jorge@gmail.com',
+        address: 'Av. Dr. Adílson Rodrigues, 2445',
+        favorites_products: {}
       }
     ])
   },
 
-  async down(db) {
-    
+  down(db) {
+    return db.collection('clients').drop()
   }
 }
