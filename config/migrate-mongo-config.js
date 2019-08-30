@@ -1,4 +1,4 @@
-const { DATABASE_NAME, DATABASE_URL } = require('./db-config')
+const { DATABASE_NAME, DATABASE_URL } = require('./config')
 
 const config = {
   mongodb: {

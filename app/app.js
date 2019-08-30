@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const helmet = require('helmet')
 const mongoose = require('mongoose')
 const app = express()
-const { DATABASE_NAME, DATABASE_URL } = require('../config/db-config')
+const { DATABASE_NAME, DATABASE_URL } = require('../config/config')
 
 // create database connection
 process.connection = mongoose.createConnection(
@@ -17,6 +17,7 @@ process.connection = mongoose.createConnection(
 
 const loginRouter = require('./routes/login')
 const clientRouter = require('./routes/client')
+const favoritesProductsRouter = require('./routes/favorites_products')
 
 app.use(morgan('dev'))
 app.use(helmet())
@@ -26,5 +27,6 @@ app.use(cookieParser())
 
 app.use('/api/login', loginRouter)
 app.use('/api/client', clientRouter)
+app.use('/api/client/favorites_products', favoritesProductsRouter)
 
 module.exports = app

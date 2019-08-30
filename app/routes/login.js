@@ -1,19 +1,14 @@
 const express = require('express')
-const jwt = require('jsonwebtoken')
 const router = express.Router()
+const { generateJWTToken } = require('../helpers/helpers')
 
 /* POST autenticação */
 router.post('/', (req, res) => {
-  let id = ''
   let token = ''
 
   // @TODO
-  if (req.body.user === 'raoni' && req.body.pass === 'adm') {
-    id = 1
-
-    token = jwt.sign({ id }, 'secret-key', {
-      expiresIn: 600 // expira em 10 min
-    })
+  if (req.body.user === 'luiza' && req.body.pass === 'labs') {
+    token = generateJWTToken()
 
     return res.status(200).send({ auth: true, token: token })
   }
