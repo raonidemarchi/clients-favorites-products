@@ -1,23 +1,17 @@
-const clientModel = 
+const clientModel = require('../app/models/client')
+const faker = require('faker')
 
 module.exports = {
-  up(db) {
-    return db.collection('clients').insertMany([
-      {
-        name: 'Raoni Costa Demarchi',
-        email: 'raonidemarchi@gmail.com',
-        address: 'Rua João Iotti, 94',
-        favorites_products: [
-          '12398weuf', '321dsasfg', 'wq12e2213'
-        ]
-      },
-      {
-        name: 'Jorge Silva',
-        email: 'jorge@gmail.com',
-        address: 'Av. Dr. Adílson Rodrigues, 2445',
-        favorites_products: {}
+  up() {
+    const clients = Array(12).fill().map(() => {
+      return {
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        address: faker.address.streetAddress()
       }
-    ])
+    })
+
+    return clientModel.insertMany(clients)
   },
 
   down(db) {

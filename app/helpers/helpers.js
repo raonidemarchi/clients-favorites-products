@@ -1,7 +1,19 @@
 const jwt = require('jsonwebtoken')
 const axios = require('axios')
+const mongoose = require('mongoose')
+const { DATABASE_NAME, DATABASE_URL } = require('../../config/config')
 
-function generateJWTToken(client_id) {
+function createDbConnection() {
+  return mongoose.createConnection(
+    `${DATABASE_URL}/${DATABASE_NAME}`,
+    {
+      useNewUrlParser: true,
+      useCreateIndex: true
+    }
+  )
+}
+
+function generateJWTToken() {
   return jwt.sign({}, 'secret-key', {
     expiresIn: '120 days'
   })
@@ -39,6 +51,7 @@ function validateProductById(id) {
 }
 
 module.exports = {
+  createDbConnection,
   generateJWTToken,
   verifyJWT,
   validateProductById

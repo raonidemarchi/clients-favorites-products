@@ -5,7 +5,7 @@ const { verifyJWT } = require('../helpers/helpers')
 
 /* GET clients list */
 router.get('/', verifyJWT, (req, res) => {
-  clientModel.find({ active: true }, { favorites_products: false }, (err, data) => {
+  clientModel.find({ active: true }, { favorites_products: false,  }, (err, data) => {
     if (err) {
       return res.status(500).json({ message: 'Não foi possível trazer a lista de usuários.' })
     }

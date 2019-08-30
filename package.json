@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node app/server.js",
     "dev": "nodemon app/server.js",
-    "migration-up": "migrate-mongo up -f ./config/migrate-mongo-config.js",
-    "migration-down": "migrate-mongo down -f ./config/migrate-mongo-config.js"
+    "migrate-up": "migrate-mongo up -f ./config/migrate-mongo-config.js",
+    "migrate-down": "migrate-mongo down -f ./config/migrate-mongo-config.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -20,6 +20,7 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
+    "faker": "^4.1.0",
     "jest": "^24.9.0",
     "migrate-mongo": "^6.0.2",
     "nodemon": "^1.19.1"
