@@ -21,23 +21,23 @@ function generateToken() {
 function validateProductById(id = '') {
   return new Promise(async (resolve, reject) => {
     let result = {}
-    
+
     try {
       result = await axios.get(`${PRODUCT_API}/${id}`)
-    } catch(error) {
-      return reject(error)
+    } catch(err) {
+      return reject(err)
     }
 
     return resolve(result.data);
   })
 }
 
-function searchClientFavoriteProduct(clientData = {}, product_id = '') {
+function searchClientFavoriteProduct(clientData = {}, productId = '') {
   if (clientData.favorites_products.length === 0) {
     return false
   }
 
-  return clientData.favorites_products.find(clientInfo => clientInfo.id === product_id)
+  return clientData.favorites_products.find(clientInfo => clientInfo.id === productId)
 }
 
 module.exports = {

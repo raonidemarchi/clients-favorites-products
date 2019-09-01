@@ -3,7 +3,7 @@ const faker = require('faker')
 
 module.exports = {
   up() {
-    const clients = Array(12).fill().map(() => {
+    const clients = Array(30).fill().map(() => {
       return {
         name: faker.name.findName(),
         email: faker.internet.email(),

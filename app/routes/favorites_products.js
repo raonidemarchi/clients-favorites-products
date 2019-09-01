@@ -65,6 +65,22 @@ router.post('/:clientId/:productId', verifyToken, async (req, res) => {
 router.delete('/:clientId/:productId', verifyToken, async (req, res) => {
   const clientId = req.params.clientId
   const productId = req.params.productId
+  let client, product = {}
+
+  try {
+    [client, product] = Promise.all([
+      clientModel.findOne({ _id: clientId }, '_id'),
+      clientModel.findOne({ _id: clientId, 'favorites_products.id': productId }, '_id')
+    ])
+  } catch(err) {
+    if (Object.entries(client).length === 0) {
+      return res.status(404).json({ message: 'Cliente não encontrado.' })
+    }
+
+    if (Object.entries(product).length === 0) {
+      return res.status(404).json({ message: 'Este produto não está na lista de favoritos desse usuário.' })
+    }
+  }
   
   try {
     await clientModel.update({ _id: clientId }, { $pull: { favorites_products: { id: productId } } })

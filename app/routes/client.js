@@ -52,31 +52,29 @@ router.post('/', verifyToken, verifyDuplicatedClientEmail, async (req, res) => {
 })
 
 /* UPDATE update a client information */
-router.put('/:id', verifyToken, async (req, res) => {
+router.put('/:id', verifyToken, verifyDuplicatedClientEmail, async (req, res) => {
   let client = {}
 
-  if (req.body.email) {
-    delete req.body.email
-  }
-
   try {
-    client = await clientModel.update({ _id: req.params.id }, req.body)
+    client = await clientModel.updateOne({ _id: req.params.id }, req.body)
   } catch(err) {
     return res.status(404).json({ message: 'Cliente não encontrado.' })
   }
 
-  return res.status(200).json(client)
+  return res.status(200).json({ message: 'Dados do cliente alterados.', ...client })
 })
 
 /* DELETE remove a client */
 router.delete('/:id', verifyToken, async (req, res) => {
+  let client = {}
+
   try {
-    await clientModel.updateOne({ _id: req.params.id }, { active: false })
+    client = await clientModel.updateOne({ _id: req.params.id }, { active: false })
   } catch(err) {
     return res.status(404).json({ message: 'Cliente não encontrado.' })
   }
 
-  return res.status(200).json({ message: 'Cliente removido.' })
+  return res.status(200).json({ message: 'Cliente removido.', ...client })
 })
 
 module.exports = router

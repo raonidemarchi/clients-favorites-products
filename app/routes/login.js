@@ -6,10 +6,8 @@ const { generateToken } = require('../helpers/helpers')
 router.post('/', (req, res) => {
   let token = ''
 
-  // @TODO
   if (req.body.user === 'luiza' && req.body.pass === 'labs') {
     token = generateToken()
-
     return res.status(200).send({ auth: true, token: token })
   }
   
