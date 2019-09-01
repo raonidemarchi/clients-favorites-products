@@ -1,6 +1,6 @@
 const axios = require('axios')
 const mongoose = require('mongoose')
-const { DATABASE_NAME, DATABASE_URL, TOKEN_SECRET } = require('../../config/config')
+const { DATABASE_NAME, DATABASE_URL, TOKEN_SECRET, PRODUCT_API } = require('../../config/config')
 
 function createDbConnection() {
   return mongoose.createConnection(
@@ -19,13 +19,13 @@ function generateToken() {
 }
 
 function validateProductById(id = '') {
-  return new Promise(async resolve => {
+  return new Promise(async (resolve, reject) => {
     let result = {}
     
     try {
-      result = await axios.get(`http://challenge-api.luizalabs.com/api/product/${id}`)
+      result = await axios.get(`${PRODUCT_API}/${id}`)
     } catch(error) {
-      return resolve(false)
+      return reject(error)
     }
 
     return resolve(result.data);

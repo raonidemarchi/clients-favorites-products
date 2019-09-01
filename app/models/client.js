@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 const { createDbConnection } = require('../helpers/helpers')
 const dbConnection = createDbConnection()
+const { PAGINATION_OPTIONS } = require('../../config/config')
 
 const schema = new mongoose.Schema(
   {
@@ -45,5 +47,10 @@ const schema = new mongoose.Schema(
     versionKey: false
   }
 )
+
+mongoosePaginate.paginate.options = PAGINATION_OPTIONS
+PAGINATION_OPTIONS.customLabels.docs = 'clients'
+
+schema.plugin(mongoosePaginate)
 
 module.exports = dbConnection.model('client', schema)

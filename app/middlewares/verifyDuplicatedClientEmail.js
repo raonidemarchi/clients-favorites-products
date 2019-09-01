@@ -1,6 +1,6 @@
 const clientModel = require('../models/client')
 
-async function verifyClientEmail(req, res, next) {
+async function verifyDuplicatedClientEmail(req, res, next) {
   let clientEmail = {}
 
   try {
@@ -16,4 +16,4 @@ async function verifyClientEmail(req, res, next) {
   next()
 }
 
-module.exports = verifyClientEmail
+module.exports = verifyDuplicatedClientEmail

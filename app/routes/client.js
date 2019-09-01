@@ -2,14 +2,22 @@ const express = require('express')
 const router = express.Router()
 const clientModel = require('../models/client')
 const verifyToken = require('../middlewares/verifyToken')
-const verifyClientEmail = require('../middlewares/verifyClientEmail')
+const verifyDuplicatedClientEmail = require('../middlewares/verifyDuplicatedClientEmail')
 
 /* GET clients list */
 router.get('/', verifyToken, async (req, res) => {
+  const page = req.query.page || 1
   let clients = []
 
   try {
-    clients = await clientModel.find({ active: true }, { favorites_products: false, active: false, createdDate: false })
+    clients = await clientModel.paginate(
+      { active: true },
+      {
+        page: page,
+        limit: 10,
+        select: { favorites_products: false, active: false, createdDate: false }
+      }
+    )
   } catch(err) {
     return res.status(500).json({ message: 'Não foi possível trazer a lista de clientes.' })
   }
@@ -31,7 +39,7 @@ router.get('/:id', verifyToken, async (req, res) => {
 })
 
 /* POST add a new client */
-router.post('/', verifyToken, verifyClientEmail, async (req, res) => {
+router.post('/', verifyToken, verifyDuplicatedClientEmail, async (req, res) => {
   let newClient = {}
 
   try {
@@ -61,14 +69,14 @@ router.put('/:id', verifyToken, async (req, res) => {
 })
 
 /* DELETE remove a client */
-router.delete('/:id', verifyToken, (req, res) => {
-  clientModel.updateOne({ _id: req.params.id }, { active: false } , (err, data) => {
-    if (err) {
-      return res.status(404).json({ message: 'Cliente não encontrado.' })
-    }
-    
-    return res.status(200).json({ message: 'Cliente removido.' })
-  })
+router.delete('/:id', verifyToken, async (req, res) => {
+  try {
+    await clientModel.updateOne({ _id: req.params.id }, { active: false })
+  } catch(err) {
+    return res.status(404).json({ message: 'Cliente não encontrado.' })
+  }
+
+  return res.status(200).json({ message: 'Cliente removido.' })
 })
 
 module.exports = router
