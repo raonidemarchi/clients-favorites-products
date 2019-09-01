@@ -1,28 +1,45 @@
 const express = require('express')
 const router = express.Router()
 const clientModel = require('../models/client')
-const { verifyJWT, validateProductById } = require('../helpers/helpers')
+const verifyToken = require('../middlewares/verifyToken')
+const { validateProductById, searchClientFavoriteProduct } = require('../helpers/helpers')
 
 /* GET list client's favorites products */
-router.get('/:client_id', verifyJWT, (req, res) => {
-  clientModel.findOne({ _id: req.params.client_id }, 'favorites_products', (err, data) => {
-    if (err) {
-      return res.status(500).json({ message: 'Não foi possível trazer a lista de produtos favoritos' })
-    }
+router.get('/:client_id', verifyToken, async (req, res) => {
+  let favoritesProducts = {}
 
-    return res.status(200).json(data)
-  })
+  try {
+    favoritesProducts = await clientModel.findOne({ _id: req.params.client_id }, 'favorites_products')
+  } catch(err) {
+    return res.status(500).json({ message: 'Não foi possível encontrar a lista de favoritos desse cliente.' })
+  }
+
+  return res.status(200).json(favoritesProducts)
 })
 
 /* POST add product to favorites */
-router.post('/:client_id/:product_id', verifyJWT, async (req, res) => {
+router.post('/:client_id/:product_id', verifyToken, async (req, res) => {
   const client_id = req.params.client_id
   const product_id = req.params.product_id
-  const favoriteProduct = await validateProductById(product_id)
+  let favoriteProduct = {}
+  let client = {}
   let favoriteProductUtilData = {}
+
+  try {
+    [ favoriteProduct, client ] = await Promise.all([
+      validateProductById(product_id),
+      clientModel.findOne({ _id: client_id }, 'favorites_products')
+    ])
+  } catch(err) {
+    return res.status(404).json({ message: 'Cliente não encontrado.' })
+  }
 
   if (!favoriteProduct) {
     return res.status(404).json({ message: 'Produto não encontrado.' })
+  }
+
+  if (searchClientFavoriteProduct(client, product_id)) {
+    return res.status(401).json({ message: 'Esse produto já está nos favoritos desse cliente.' })
   }
 
   favoriteProductUtilData = {
@@ -33,29 +50,13 @@ router.post('/:client_id/:product_id', verifyJWT, async (req, res) => {
     reviewScore: favoriteProduct.reviewScore
   }
 
-  clientModel.updateOne(
-    {
-      _id: client_id,
-      'favorites_products.id': {
-        $nin: [product_id]
-      }
-    },
-    {
-      $push: {
-        favorites_products: favoriteProductUtilData
-      }
-    }, (err, data) => {
-      if (err) {
-        return res.status(404).json({ message: 'Cliente não encontrado.' })
-      }
-
-      if (data.nModified === 0) {
-        return res.status(200).json({ message: 'Esse produto já está nos favoritos desse cliente.' })
-      }
-      
-      return res.status(200).json({ message: 'Produto adicinado aos favoritos.' })
-    }
-  )
+  try {
+    await clientModel.updateOne({ _id: client_id }, { $push: { favorites_products: favoriteProductUtilData } })
+  } catch(err) {
+    return res.status(500).json({ message: 'Houve um problema ao inserir o novo produto à lista de favoritos.' })
+  }
+    
+  return res.status(200).json({ message: 'Produto adicinado aos favoritos.' })
 })
 
 module.exports = router

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { generateJWTToken } = require('../helpers/helpers')
+const { generateToken } = require('../helpers/helpers')
 
 /* POST autenticação */
 router.post('/', (req, res) => {
@@ -8,7 +8,7 @@ router.post('/', (req, res) => {
 
   // @TODO
   if (req.body.user === 'luiza' && req.body.pass === 'labs') {
-    token = generateJWTToken()
+    token = generateToken()
 
     return res.status(200).send({ auth: true, token: token })
   }
