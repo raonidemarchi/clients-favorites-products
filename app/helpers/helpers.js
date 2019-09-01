@@ -1,5 +1,6 @@
 const axios = require('axios')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
 const { DATABASE_NAME, DATABASE_URL, TOKEN_SECRET, PRODUCT_API } = require('../../config/config')
 
 function createDbConnection() {
@@ -18,6 +19,20 @@ function generateToken() {
   })
 }
 
+function validateToken(token) {
+  if (!token) {
+    return false
+  }
+  
+  jwt.verify(token, TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      return false
+    }
+  })
+
+  return true
+}
+
 function validateProductById(id = '') {
   return new Promise(async (resolve, reject) => {
     let result = {}
@@ -33,7 +48,7 @@ function validateProductById(id = '') {
 }
 
 function searchClientFavoriteProduct(clientData = {}, productId = '') {
-  if (clientData.favorites_products.length === 0) {
+  if (!clientData.favorites_products || clientData.favorites_products.length === 0) {
     return false
   }
 
@@ -43,6 +58,7 @@ function searchClientFavoriteProduct(clientData = {}, productId = '') {
 module.exports = {
   createDbConnection,
   generateToken,
+  validateToken,
   validateProductById,
   searchClientFavoriteProduct
 }

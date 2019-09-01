@@ -6,7 +6,8 @@
     "start": "node app/server.js",
     "dev": "nodemon app/server.js",
     "migrate-up": "migrate-mongo up -f ./config/migrate-mongo-config.js",
-    "migrate-down": "migrate-mongo down -f ./config/migrate-mongo-config.js"
+    "migrate-down": "migrate-mongo down -f ./config/migrate-mongo-config.js",
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^0.19.0",
