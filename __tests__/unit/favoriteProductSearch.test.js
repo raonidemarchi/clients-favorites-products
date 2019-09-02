@@ -9,11 +9,14 @@ describe('Favorite product search', () => {
         name: 'Nome do produto'
       }]
     }
+    const favoriteProduct = searchClientFavoriteProduct(clientData, productId)
 
-    expect(searchClientFavoriteProduct(clientData, productId)).toBe(clientData.favorites_products[0])
+    expect(favoriteProduct).toBe(clientData.favorites_products[0])
   })
 
   it('Should return false when the favorites products list is empty', () => {
-    expect(searchClientFavoriteProduct()).toBe(false)
+    const favoriteProduct = searchClientFavoriteProduct()
+    
+    expect(favoriteProduct).toBe(false)
   })
 })

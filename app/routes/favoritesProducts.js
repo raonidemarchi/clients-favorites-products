@@ -2,19 +2,33 @@ const express = require('express')
 const router = express.Router()
 const clientModel = require('../models/client')
 const verifyToken = require('../middlewares/verifyToken')
-const { getProductById, searchClientFavoriteProduct } = require('../helpers/helpers')
+const { getProductById, searchClientFavoriteProduct, calculateOffset, createPaginationMetaResponse } = require('../helpers/helpers')
 
 /* GET list client's favorites products */
 router.get('/:clientId', verifyToken, async (req, res) => {
-  let favoritesProducts = {}
+  const page = +req.query.page || 1
+  const limit = 10
+  const offset = calculateOffset(page, limit)
+  let nextPage = null
+  let client = {}
 
   try {
-    favoritesProducts = await clientModel.findOne({ _id: req.params.clientId }, 'favorites_products')
+    client = await clientModel.findOne({ _id: req.params.clientId }, { favorites_products: { $slice: [ offset, limit + 1 ] } })
   } catch(err) {
     return res.status(500).json({ message: 'Não foi possível encontrar a lista de favoritos desse cliente.' })
   }
 
-  return res.status(200).json(favoritesProducts.favorites_products)
+  if (client.favorites_products.length === limit + 1) {
+    nextPage = page + 1
+    client.favorites_products.pop()
+  }
+
+  return res.status(200).json(
+    {
+      ...createPaginationMetaResponse(page, limit, nextPage),
+      favorites_products: client.favorites_products
+    }
+  )
 })
 
 /* POST add product to favorites */

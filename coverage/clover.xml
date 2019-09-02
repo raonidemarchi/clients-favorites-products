@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1567466066350" clover="3.2.0">
-  <project timestamp="1567466066350" name="All files">
+<coverage generated="1567465372129" clover="3.2.0">
+  <project timestamp="1567465372129" name="All files">
     <metrics statements="176" coveredstatements="158" conditionals="51" coveredconditionals="40" methods="22" coveredmethods="21" elements="249" coveredelements="219" complexity="0" loc="176" ncloc="176" packages="5" files="9" classes="9"/>
     <package name="app">
       <metrics statements="23" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -38,10 +38,10 @@
       <metrics statements="24" coveredstatements="24" conditionals="17" coveredconditionals="12" methods="10" coveredmethods="10"/>
       <file name="helpers.js" path="C:\Users\raoni\Documents\Github\produtos-favoritos-clientes\app\helpers\helpers.js">
         <metrics statements="24" coveredstatements="24" conditionals="17" coveredconditionals="12" methods="10" coveredmethods="10"/>
-        <line num="1" count="8" type="stmt"/>
-        <line num="2" count="8" type="stmt"/>
-        <line num="3" count="8" type="stmt"/>
-        <line num="4" count="8" type="stmt"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
         <line num="7" count="5" type="stmt"/>
         <line num="17" count="5" type="stmt"/>
         <line num="23" count="18" type="cond" truecount="2" falsecount="0"/>
@@ -59,9 +59,9 @@
         <line num="51" count="5" type="cond" truecount="4" falsecount="0"/>
         <line num="52" count="3" type="stmt"/>
         <line num="55" count="2" type="stmt"/>
-        <line num="59" count="3" type="stmt"/>
-        <line num="63" count="3" type="stmt"/>
-        <line num="72" count="8" type="stmt"/>
+        <line num="59" count="2" type="stmt"/>
+        <line num="63" count="2" type="stmt"/>
+        <line num="72" count="7" type="stmt"/>
       </file>
     </package>
     <package name="app.middlewares">

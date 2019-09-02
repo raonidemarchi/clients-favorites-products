@@ -55,10 +55,26 @@ function searchClientFavoriteProduct(clientData = {}, productId = '') {
   return clientData.favorites_products.find(clientInfo => clientInfo.id === productId)
 }
 
+function calculateOffset(page = 0, limit = 0) {
+  return limit * page - limit
+}
+
+function createPaginationMetaResponse(page = 0, limit = 0, nextPage = 0) {
+  return {
+    meta: {
+      page_number: page,
+      page_size: limit,
+      next_page: nextPage,
+    }
+  }
+}
+
 module.exports = {
   createDbConnection,
   generateToken,
   validateToken,
   getProductById,
-  searchClientFavoriteProduct
+  searchClientFavoriteProduct,
+  calculateOffset,
+  createPaginationMetaResponse
 }

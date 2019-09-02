@@ -3,26 +3,37 @@ const router = express.Router()
 const clientModel = require('../models/client')
 const verifyToken = require('../middlewares/verifyToken')
 const verifyDuplicatedClientEmail = require('../middlewares/verifyDuplicatedClientEmail')
+const { calculateOffset, createPaginationMetaResponse } = require('../helpers/helpers')
 
 /* GET clients list */
 router.get('/', verifyToken, async (req, res) => {
-  const page = req.query.page || 1
+  const page = +req.query.page || 1
+  const limit = 10
+  const offset = calculateOffset(page, limit)
+  let nextPage = null
   let clients = []
 
   try {
-    clients = await clientModel.paginate(
+    clients = await clientModel.find(
       { active: true },
-      {
-        page: page,
-        limit: 10,
-        select: { favorites_products: false, active: false, createdDate: false }
-      }
+      { favorites_products: false, active: false, createdDate: false },
+      { skip: offset, limit: limit + 1 }
     )
   } catch(err) {
     return res.status(500).json({ message: 'Não foi possível trazer a lista de clientes.' })
   }
 
-  return res.status(200).json(clients)
+  if (clients.length === limit + 1) {
+    nextPage = page + 1
+    clients.pop()
+  }
+
+  return res.status(200).json(
+    {
+      ...createPaginationMetaResponse(page, limit, nextPage),
+      clients
+    }
+  )
 })
 
 /* GET client by id */
