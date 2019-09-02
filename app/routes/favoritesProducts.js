@@ -31,11 +31,11 @@ router.post('/:clientId/:productId', verifyToken, async (req, res) => {
       clientModel.findOne({ _id: clientId }, 'favorites_products')
     ])
   } catch(err) {
-    if (Object.entries(favoriteProduct).length === 0) {
+    if (err.config) {
       return res.status(404).json({ message: 'Produto não encontrado.' })
     }
 
-    if (Object.entries(client).length === 0) {
+    if (err.path) {
       return res.status(404).json({ message: 'Cliente não encontrado.' })
     }
   }
@@ -65,25 +65,20 @@ router.post('/:clientId/:productId', verifyToken, async (req, res) => {
 router.delete('/:clientId/:productId', verifyToken, async (req, res) => {
   const clientId = req.params.clientId
   const productId = req.params.productId
-  let client, product = {}
+  let client = {}
 
   try {
-    [client, product] = Promise.all([
-      clientModel.findOne({ _id: clientId }, '_id'),
-      clientModel.findOne({ _id: clientId, 'favorites_products.id': productId }, '_id')
-    ])
+    client = await clientModel.findOne({ _id: clientId, 'favorites_products.id': productId }, '_id')
   } catch(err) {
-    if (Object.entries(client).length === 0) {
-      return res.status(404).json({ message: 'Cliente não encontrado.' })
-    }
+    return res.status(404).json({ message: 'Cliente não encontrado.' })
+  }
 
-    if (Object.entries(product).length === 0) {
-      return res.status(404).json({ message: 'Este produto não está na lista de favoritos desse usuário.' })
-    }
+  if (!client) {
+    return res.status(404).json({ message: 'Este produto não está na lista de favoritos desse usuário.' })
   }
   
   try {
-    await clientModel.update({ _id: clientId }, { $pull: { favorites_products: { id: productId } } })
+    await clientModel.updateOne({ _id: clientId }, { $pull: { favorites_products: { id: productId } } })
   } catch(err) {
     return res.status(500).json({ message: 'Houve um problema ao remover o produto da lista de favoritos.' })
   }

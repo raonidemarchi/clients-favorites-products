@@ -1,3 +1,4 @@
+'use strict'
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
@@ -6,7 +7,7 @@ const app = express()
 
 const loginRouter = require('./routes/login')
 const clientRouter = require('./routes/client')
-const favoritesProductsRouter = require('./routes/favorites_products')
+const favoritesProductsRouter = require('./routes/favoritesProducts')
 
 app.use(morgan('dev'))
 app.use(helmet())

@@ -30,7 +30,7 @@ router.get('/:id', verifyToken, async (req, res) => {
   let client = {}
 
   try {
-    clients = await clientModel.findOne({ _id: req.params.id }, { favorites_products: false, active: false, createdDate: false })
+    client = await clientModel.findOne({ _id: req.params.id }, { favorites_products: false, active: false, createdDate: false })
   } catch(err) {
     return res.status(500).json({ message: 'Cliente não encontrado.' })
   }
@@ -48,7 +48,7 @@ router.post('/', verifyToken, verifyDuplicatedClientEmail, async (req, res) => {
     return res.status(500).json({ message: 'Não foi possível adicionar um novo cliente.' })
   }
 
-  return res.status(500).json(newClient)
+  return res.status(200).json(newClient)
 })
 
 /* UPDATE update a client information */
