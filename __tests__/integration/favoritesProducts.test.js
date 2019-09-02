@@ -1,10 +1,10 @@
 const request = require('supertest')
+const { generateFakeUser } = require('../helpers/helpers')
+const axios = require('axios')
 const app = require('../../app/app')
 const clientModel = require('../../app/models/client')
-const axios = require('axios')
 const { PRODUCT_API } = require('../../config/config')
-const { generateToken } = require('../../app/helpers/helpers')
-const { getProductById } = require('../../app/helpers/helpers')
+const { generateToken, getProductById } = require('../../app/helpers/helpers')
 const token = generateToken()
 let firstProductId = ''
 
@@ -33,11 +33,7 @@ describe('Product validation', () => {
 
 describe('Clients favorites products', () => {
   it('Should get the list of favorites products', async () => {
-    const client = await clientModel.create({
-      name: 'Raoni Demarchi',
-      email: 'raonidemarchi4@gmail.com',
-      address: 'Rua x, 123'
-    })
+    const client = await clientModel.create(generateFakeUser())
 
     const response = await request(app)
       .get(`/api/client/favorites_products/${client._id}`)
@@ -49,11 +45,7 @@ describe('Clients favorites products', () => {
   })
 
   it('Should add a product to favorites list', async () => {
-    const client = await clientModel.create({
-      name: 'Raoni Demarchi',
-      email: 'raonidemarchi9@gmail.com',
-      address: 'Rua x, 123'
-    })
+    const client = await clientModel.create(generateFakeUser())
 
     const response = await request(app)
       .post(`/api/client/favorites_products/${client._id}/${firstProductId}`)
@@ -65,11 +57,7 @@ describe('Clients favorites products', () => {
   })
 
   it('Should not add an invalid product to favorites list', async () => {
-    const client = await clientModel.create({
-      name: 'Raoni Demarchi',
-      email: 'raonidemarchi9@gmail.com',
-      address: 'Rua x, 123'
-    })
+    const client = await clientModel.create(generateFakeUser())
 
     const response = await request(app)
       .post(`/api/client/favorites_products/${client._id}/089123jksadhk`)
@@ -81,11 +69,7 @@ describe('Clients favorites products', () => {
   })
 
   it('Should not add a product that is already on the favorites list', async () => {
-    const client = await clientModel.create({
-      name: 'Raoni Demarchi',
-      email: 'raonidemarchi9@gmail.com',
-      address: 'Rua x, 123'
-    })
+    const client = await clientModel.create(generateFakeUser())
 
     await request(app)
       .post(`/api/client/favorites_products/${client._id}/${firstProductId}`)
@@ -110,9 +94,7 @@ describe('Clients favorites products', () => {
 
   it('Should remove a product from favorites list', async () => {
     const client = await clientModel.create({
-      name: 'Raoni Demarchi',
-      email: 'raonidemarchi10@gmail.com',
-      address: 'Rua x, 123',
+      ... generateFakeUser(),
       favorites_products: [{
         id: firstProductId
       }]
@@ -136,14 +118,7 @@ describe('Clients favorites products', () => {
   })
 
   it('Should not remove a product if it\'s not on the list favorites list', async () => {
-    const client = await clientModel.create({
-      name: 'Raoni Demarchi',
-      email: 'raonidemarchi12@gmail.com',
-      address: 'Rua x, 123',
-      favorites_products: [{
-        id: firstProductId
-      }]
-    })
+    const client = await clientModel.create(generateFakeUser())
 
     const response = await request(app)
       .delete(`/api/client/favorites_products/${client._id}/lçk321nsdajp`)

@@ -1,4 +1,5 @@
 const request = require('supertest')
+const { generateFakeUser } = require('../helpers/helpers')
 const app = require('../../app/app')
 const clientModel = require('../../app/models/client')
 const { generateToken } = require('../../app/helpers/helpers')
@@ -17,11 +18,7 @@ describe('Clients', () => {
     const response = await request(app)
       .post('/api/client')
       .set('X-Access-Token', token)
-      .send({
-        name: 'Raoni Demarchi',
-        email: 'raonidemarchi@gmail.com',
-        address: 'Rua x, 123'
-      })
+      .send(generateFakeUser())
     
     await clientModel.deleteOne({ _id: response.body._id })
 
@@ -30,11 +27,7 @@ describe('Clients', () => {
   })
 
   it('Should get a client by id', async () => {
-    const client = await clientModel.create({
-      name: 'Raoni Demarchi',
-      email: 'raonidemarchi2@gmail.com',
-      address: 'Rua x, 123'
-    })
+    const client = await clientModel.create(generateFakeUser())
 
     const response = await request(app)
       .get(`/api/client/${client._id}`)
@@ -47,20 +40,12 @@ describe('Clients', () => {
   })
 
   it('Should update client information', async () => {
-    const client = await clientModel.create({
-      name: 'Raoni Demarchi',
-      email: 'raonidemarchi3@gmail.com',
-      address: 'Rua x, 123'
-    })
+    const client = await clientModel.create(generateFakeUser())
 
     const response = await request(app)
       .put(`/api/client/${client._id}`)
       .set('X-Access-Token', token)
-      .send({
-        name: 'Raoni Costa',
-        email: 'raonidemarchi@hotmail.com',
-        address: 'rua y, 125'
-      })
+      .send(generateFakeUser())
 
     await clientModel.deleteOne({ _id: client._id })
 
@@ -68,11 +53,7 @@ describe('Clients', () => {
   })
 
   it('Should inactivate a client', async () => {
-    const client = await clientModel.create({
-      name: 'Raoni Demarchi',
-      email: 'raonidemarchi4@gmail.com',
-      address: 'Rua x, 123'
-    })
+    const client = await clientModel.create(generateFakeUser())
 
     const response = await request(app)
       .delete(`/api/client/${client._id}`)
