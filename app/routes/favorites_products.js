@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const clientModel = require('../models/client')
 const verifyToken = require('../middlewares/verifyToken')
-const { validateProductById, searchClientFavoriteProduct } = require('../helpers/helpers')
+const { getProductById, searchClientFavoriteProduct } = require('../helpers/helpers')
 
 /* GET list client's favorites products */
 router.get('/:clientId', verifyToken, async (req, res) => {
@@ -27,7 +27,7 @@ router.post('/:clientId/:productId', verifyToken, async (req, res) => {
 
   try {
     [favoriteProduct, client] = await Promise.all([
-      validateProductById(productId),
+      getProductById(productId),
       clientModel.findOne({ _id: clientId }, 'favorites_products')
     ])
   } catch(err) {

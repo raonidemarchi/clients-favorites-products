@@ -19,21 +19,21 @@ function generateToken() {
   })
 }
 
-function validateToken(token) {
+function validateToken(token = '') {
   if (!token) {
     return false
   }
-  
-  jwt.verify(token, TOKEN_SECRET, (err, decoded) => {
+
+  return jwt.verify(token, TOKEN_SECRET, (err) => {
     if (err) {
       return false
     }
-  })
 
-  return true
+    return true
+  })
 }
 
-function validateProductById(id = '') {
+function getProductById(id = '') {
   return new Promise(async (resolve, reject) => {
     let result = {}
 
@@ -59,6 +59,6 @@ module.exports = {
   createDbConnection,
   generateToken,
   validateToken,
-  validateProductById,
+  getProductById,
   searchClientFavoriteProduct
 }

@@ -25,6 +25,7 @@
     "faker": "^4.1.0",
     "jest": "^24.9.0",
     "migrate-mongo": "^6.0.2",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "supertest": "^4.0.2"
   }
 }
