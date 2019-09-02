@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/17</span>
+        <span class='fraction'>17/17</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -35,16 +35,16 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/17</span>
+        <span class='fraction'>17/17</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -67,55 +67,55 @@
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L22'></a><a href='#L22'>22</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = <span class="cstat-no" title="statement not covered" >require('express')</span>
-const cookieParser = <span class="cstat-no" title="statement not covered" >require('cookie-parser')</span>
-const morgan = <span class="cstat-no" title="statement not covered" >require('morgan')</span>
-const helmet = <span class="cstat-no" title="statement not covered" >require('helmet')</span>
-const app = <span class="cstat-no" title="statement not covered" >express()</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express')
+const cookieParser = require('cookie-parser')
+const morgan = require('morgan')
+const helmet = require('helmet')
+const app = express()
 &nbsp;
-const loginRouter = <span class="cstat-no" title="statement not covered" >require('./routes/login')</span>
-const clientRouter = <span class="cstat-no" title="statement not covered" >require('./routes/client')</span>
-const favoritesProductsRouter = <span class="cstat-no" title="statement not covered" >require('./routes/favorites_products')</span>
+const loginRouter = require('./routes/login')
+const clientRouter = require('./routes/client')
+const favoritesProductsRouter = require('./routes/favorites_products')
 &nbsp;
-<span class="cstat-no" title="statement not covered" >app.use(morgan('dev'))</span>
-<span class="cstat-no" title="statement not covered" >app.use(helmet())</span>
-<span class="cstat-no" title="statement not covered" >app.use(express.json())</span>
-<span class="cstat-no" title="statement not covered" >app.use(express.urlencoded({ extended: false }))</span>
-<span class="cstat-no" title="statement not covered" >app.use(cookieParser())</span>
+app.use(morgan('dev'))
+app.use(helmet())
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
 &nbsp;
-<span class="cstat-no" title="statement not covered" >app.use('/api/login', loginRouter)</span>
-<span class="cstat-no" title="statement not covered" >app.use('/api/client', clientRouter)</span>
-<span class="cstat-no" title="statement not covered" >app.use('/api/client/favorites_products', favoritesProductsRouter)</span>
+app.use('/api/login', loginRouter)
+app.use('/api/client', clientRouter)
+app.use('/api/client/favorites_products', favoritesProductsRouter)
 &nbsp;
-<span class="cstat-no" title="statement not covered" >module.exports = app</span>
+module.exports = app
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Sep 02 2019 01:11:32 GMT-0300 (GMT-03:00)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Sep 02 2019 01:40:52 GMT-0300 (GMT-03:00)
 </div>
 </div>
 <script src="..\prettify.js"></script>

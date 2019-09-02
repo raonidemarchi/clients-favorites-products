@@ -8,10 +8,11 @@ router.post('/', (req, res) => {
 
   if (req.body.user === 'luiza' && req.body.pass === 'labs') {
     token = generateToken()
+    
     return res.status(200).send({ auth: true, token: token })
   }
   
-  return res.status(500).send({ auth: false, error: 'Usuário ou senha inválido.' })
+  return res.status(401).send({ auth: false, error: 'Usuário ou senha inválido.' })
 })
 
 module.exports = router

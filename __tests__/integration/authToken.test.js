@@ -1,5 +1,3 @@
-const request = require('supertest')
-const app = require('../../app/app')
 const { generateToken, validateToken } = require('../../app/helpers/helpers')
 
 describe('Auth token', () => {
@@ -18,7 +16,7 @@ describe('Auth token', () => {
 
   it('Should not autheticate with an invalid JWT token', () => {
     const token = generateToken()
-    const tokenValid = validateToken('sad213 ' + token + 'asddas')
+    const tokenValid = validateToken(token + 'asddas')
     
     expect(tokenValid).toBe(false)
   })
