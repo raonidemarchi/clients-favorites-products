@@ -78,7 +78,7 @@ Use the following command to run the tests:
 npm test
 ```
 
-## APIs
+## API's
 
 ### Login
 
@@ -139,6 +139,16 @@ Inactivate a client.
 
 *Auth token need to be sent on `X-Access-Token` header.*
 
-##### `GET`: `/api/client/favorites_products/<CLIENT_ID>/<PRODUCT_ID>`
+##### `GET`: `/api/client/favorites_products/<CLIENT_ID>/?page=<PAGE_NUMBER>`
 
-Get the the client's favorites products list.
+Get the client's favorites products list.
+
+##### `POST`: `/api/client/favorites_products/<CLIENT_ID>/<PRODUCT_ID>`
+
+Add a product to the client's favorites products list.
+
+*It needs to be an existent product (refer to doc: https://gist.github.com/Bgouveia/9e043a3eba439489a35e70d1b5ea08ec).*
+
+##### `DELETE`: `/api/client/favorites_products/<CLIENT_ID>/<PRODUCT_ID>`
+
+Remove a product from client's favorites products list.
