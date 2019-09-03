@@ -30,7 +30,7 @@ router.get('/', verifyToken, async (req, res) => {
 
   return res.status(200).json(
     {
-      ...createPaginationMetaResponse(page, limit, nextPage),
+      ...createPaginationMetaResponse(page, clients.length, nextPage),
       clients
     }
   )
@@ -41,9 +41,13 @@ router.get('/:id', verifyToken, async (req, res) => {
   let client = {}
 
   try {
-    client = await clientModel.findOne({ _id: req.params.id }, { favorites_products: false, active: false, createdDate: false })
+    client = await clientModel.findOne({ _id: req.params.id, active: true }, { favorites_products: false, active: false, createdDate: false })
   } catch(err) {
-    return res.status(500).json({ message: 'Cliente não encontrado.' })
+    return res.status(404).json({ message: 'Cliente não encontrado.' })
+  }
+
+  if (!client) {
+    return res.status(404).json({ message: 'Cliente não encontrado.' })
   }
 
   return res.status(200).json(client)

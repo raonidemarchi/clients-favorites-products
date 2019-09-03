@@ -25,7 +25,7 @@ router.get('/:clientId', verifyToken, async (req, res) => {
 
   return res.status(200).json(
     {
-      ...createPaginationMetaResponse(page, limit, nextPage),
+      ...createPaginationMetaResponse(page, client.favorites_products.length, nextPage),
       favorites_products: client.favorites_products
     }
   )

@@ -59,11 +59,11 @@ function calculateOffset(page = 0, limit = 0) {
   return limit * page - limit
 }
 
-function createPaginationMetaResponse(page = 0, limit = 0, nextPage = 0) {
+function createPaginationMetaResponse(page = 0, pageSize = 0, nextPage = 0) {
   return {
     meta: {
       page_number: page,
-      page_size: limit,
+      page_size: pageSize,
       next_page: nextPage,
     }
   }
