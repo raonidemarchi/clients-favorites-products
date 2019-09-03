@@ -82,7 +82,7 @@ npm test
 
 ### Login
 
-##### `POST`: `/api/login`
+#### `POST`: `/api/login`
 
 Do login and provides the authentication token *(necessary to access the others APIs)*:
 
@@ -99,15 +99,15 @@ Do login and provides the authentication token *(necessary to access the others 
 
 *Auth token need to be sent on `X-Access-Token` header.*
 
-##### `GET`: `/api/client/?page=<PAGE_NUMBER>`
+#### `GET`: `/api/client/?page=<PAGE_NUMBER>`
 
 Get all clients.
 
-##### `GET`: `/api/client/<CLIENT_ID>`
+#### `GET`: `/api/client/<CLIENT_ID>`
 
 Get a client by `id`.
 
-##### `POST`: `/api/client`
+#### `POST`: `/api/client`
 
 Create a new client:
 
@@ -119,7 +119,7 @@ Create a new client:
 }
 ```
 
-##### `PUT`: `/api/client/<CLIENT_ID>`
+#### `PUT`: `/api/client/<CLIENT_ID>`
 
 Update client information:
 
@@ -131,7 +131,7 @@ Update client information:
 }
 ```
 
-##### `DELETE`: `/api/client/<CLIENT_ID>`
+#### `DELETE`: `/api/client/<CLIENT_ID>`
 
 Inactivate a client.
 
@@ -139,16 +139,16 @@ Inactivate a client.
 
 *Auth token need to be sent on `X-Access-Token` header.*
 
-##### `GET`: `/api/client/favorites_products/<CLIENT_ID>/?page=<PAGE_NUMBER>`
+#### `GET`: `/api/client/favorites_products/<CLIENT_ID>/?page=<PAGE_NUMBER>`
 
 Get the client's favorites products list.
 
-##### `POST`: `/api/client/favorites_products/<CLIENT_ID>/<PRODUCT_ID>`
+#### `POST`: `/api/client/favorites_products/<CLIENT_ID>/<PRODUCT_ID>`
 
 Add a product to the client's favorites products list.
 
 *It needs to be an existent product (refer to: https://gist.github.com/Bgouveia/9e043a3eba439489a35e70d1b5ea08ec).*
 
-##### `DELETE`: `/api/client/favorites_products/<CLIENT_ID>/<PRODUCT_ID>`
+#### `DELETE`: `/api/client/favorites_products/<CLIENT_ID>/<PRODUCT_ID>`
 
 Remove a product from client's favorites products list.
