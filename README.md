@@ -21,7 +21,7 @@
     docker-compose up --build
     ```
     
-    *It will run mongoDB service on `127.0.0.1:27017` but you can change it at `docker-compose.yml`.*
+    *It will run mongoDB service on your docker virtual machine on port `27017` but you can change it at `docker-compose.yml`.*
 
 4. Create an `.env` file on the root directory, you can set this options:
 
