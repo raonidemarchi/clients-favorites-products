@@ -147,7 +147,7 @@ Get the client's favorites products list.
 
 Add a product to the client's favorites products list.
 
-*It needs to be an existent product (refer to doc: https://gist.github.com/Bgouveia/9e043a3eba439489a35e70d1b5ea08ec).*
+*It needs to be an existent product (refer to: https://gist.github.com/Bgouveia/9e043a3eba439489a35e70d1b5ea08ec).*
 
 ##### `DELETE`: `/api/client/favorites_products/<CLIENT_ID>/<PRODUCT_ID>`
 
