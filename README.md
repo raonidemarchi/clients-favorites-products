@@ -14,10 +14,21 @@
     ```sh
     npm install
     ```
-3. Start [mongoDB](https://www.mongodb.com/) service OR run it using [Docker Compose](https://docs.docker.com/compose/):
+    
+3. Start [mongoDB](https://www.mongodb.com/) service — or run it using [Docker Compose](https://docs.docker.com/compose/):
 
     ```sh
     docker-compose up --build
     ```
     
     *It will run mongoDB service on `127.0.0.1:27017` but you can change it at `docker-compose.yml`.*
+
+4. Create an `.env` file on the root directory, you can set this options:
+
+    ```sh
+    PORT=3000
+    TOKEN_SECRET=luizalabssupersecret
+    DATABASE_URL=mongodb://127.0.0.1:27017
+    DATABASE_NAME=clients_favorites_products
+    ```
+    *`TOKEN_SECRET` is mandatory.*
