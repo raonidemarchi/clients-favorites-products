@@ -1,9 +1,9 @@
 # Clients Favorites Products
 > An API application to control client's favorites products.
 
-## Installing
+## Installation
 
-*Make sure to have [Git](http://git-scm.com/) and [Node.js](http://nodejs.org/) installed.*
+*Make sure to have [Git](http://git-scm.com/) and [Node.js](http://nodejs.org/) 10.0.0 (or higher) installed.*
 
 *You will also need [mongoDB](https://www.mongodb.com/) but you can run it trhough [Docker](https://www.docker.com/) by the `docker-compose.yml`.*
 
@@ -80,3 +80,65 @@ npm test
 
 ## APIs
 
+### Login
+
+##### `POST`: `/api/login`
+
+Do login and provides the authentication token *(necessary to access the others APIs)*:
+
+```json
+{
+    "user": "luiza",
+    "pass": "labs"
+}
+```
+
+*The returned token must be sent on the next API's headers `X-Access-Token`.*
+
+### Clients
+
+*Auth token need to be sent on `X-Access-Token` header.*
+
+##### `GET`: `/api/client/?page=<PAGE_NUMBER>`
+
+Get all clients.
+
+##### `GET`: `/api/client/<CLIENT_ID>`
+
+Get a client by `id`.
+
+##### `POST`: `/api/client`
+
+Create a new client:
+
+```json
+{
+    "name": "Raoni Demarchi",
+    "email": "raonidemarchi@gmail.com",
+    "address": "Rua São Benedito, 94"
+}
+```
+
+##### `PUT`: `/api/client/<CLIENT_ID>`
+
+Update client information:
+
+```json
+{
+    "name": "Raoni Costa",
+    "email": "raonidemarchi@outlook.com",
+    "address": "Rua São Benedito, 95"
+}
+```
+
+##### `DELETE`: `/api/client/<CLIENT_ID>`
+
+Inactivate a client.
+
+### Favorites Products 
+
+*Auth token need to be sent on `X-Access-Token` header.*
+
+##### `GET`: `/api/client/favorites_products/<CLIENT_ID>/<PRODUCT_ID>`
+
+Get the the client's favorites products list.
